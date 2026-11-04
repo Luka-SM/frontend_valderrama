@@ -1,6 +1,6 @@
-// envia a escala para a API Clojure e retorna os resultados
+// Envia a escala para a API Clojure e retorna os resultados
 
-const API_URL = "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export interface TableResult {
     "vetor-espacamento-traste": string[];
@@ -8,7 +8,13 @@ export interface TableResult {
     "vetor-distancia-pestana": string[];
 }
 
-export async function calcularTabela(scaleValue: number): Promise<TableResult> {
+export async function calcularTabela(
+    scaleValue: number
+): Promise<TableResult> {
+
+    if (!API_URL) {
+        throw new Error("VITE_API_URL não está configurada.");
+    }
 
     const response = await fetch(`${API_URL}/api/calcular-tabela`, {
         method: "POST",
@@ -21,7 +27,9 @@ export async function calcularTabela(scaleValue: number): Promise<TableResult> {
     });
 
     if (!response.ok) {
-        throw new Error(`Erro ao calcular tabela: HTTP ${response.status}`);
+        throw new Error(
+            `Erro ao calcular tabela: HTTP ${response.status}`
+        );
     }
 
     return await response.json() as TableResult;
