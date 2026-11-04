@@ -11,7 +11,11 @@ interface PageProps {
 export default function Home({id}: PageProps) {
 
     const scrollToSection = (id: string) => {
-        document.getElementById(id)?.scrollIntoView({behavior: "smooth"})
+        const element = document.getElementById(id)
+    
+        if (element) {
+            element.scrollIntoView({ behavior: "smooth" })
+        }
     }
 
     return(
