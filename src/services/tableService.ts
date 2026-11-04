@@ -1,6 +1,6 @@
 // Envia a escala para a API Clojure e retorna os resultados
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL?.replace(/\/+$/, "");
 
 export interface TableResult {
     "vetor-espacamento-traste": string[];
